@@ -6,7 +6,7 @@
         <link rel="icon" href="a.ico" type="image/x-icon">
     </head>
     <body>
-        <h1>ベンチマーク v2.0 Beta</h1>
+        <h1>ベンチマーク v2.0</h1>
         <button id="startButton" onclick="start()">測定スタート</button>
         <div id="CPUconsole"></div>
         <div id="MEMconsole"></div>
@@ -266,10 +266,10 @@ function measureGPU() {
                 `FPS: ${fps || 60} | Objects: ${objects.length}`;
             if (
                 fps > 0 &&
-                fps < 30
+                fps < 15
             ) {
                 isBenchmarkOver = true;
-                const GPUscore = objects.length * 3;
+                const GPUscore = objects.length;
                 window.removeEventListener(
                     "resize",
                     resize
