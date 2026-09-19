@@ -6,7 +6,7 @@
         <link rel="icon" href="a.ico" type="image/x-icon">
     </head>
     <body>
-        <h1>potatoベンチマーク v2.0</h1>
+        <h1>potatoベンチマーク v2.1</h1>
         <button id="startButton" onclick="start()">測定スタート</button>
         <div id="CPUconsole"></div>
         <div id="MEMconsole"></div>
@@ -33,7 +33,10 @@ async function start() {
     element3.textContent = "";
     element4.textContent = "";
     totalelement.textContent = "";
-    kelement.innerHTML = ""
+    kelement.innerHTML = "";
+    const cpusukoa = [];
+    const memsukoa = [];
+    const gpusukoa = [];
     const sukoa = [];
     for (let unk = 0; unk < 5; unk++) {
         element4.textContent = `${unk + 1} / 5 回目`;
@@ -42,14 +45,17 @@ async function start() {
         element3.textContent = "GPU待機中...";
         await sleep(50);
         const CPUscore = await measureCPU();
+        cpusukoa.push(CPUscore);
         element.textContent = `CPUスコア: ${CPUscore}`;
         element2.textContent = "メモリ計測中...";
         await sleep(50);
         const MEMscore = await measureMemory();
+        memsukoa.push(MEMscore);
         element2.textContent = `メモリスコア: ${MEMscore}`;
         element3.textContent = "GPU計測中...";
         await sleep(50);
         const GPUscore = await measureGPU();
+        gpusukoa.push(GPUscore);
         element3.textContent = `GPUスコア: ${GPUscore}`;
         const totalScore = CPUscore + MEMscore + GPUscore;
         sukoa.push(totalScore);
@@ -57,7 +63,7 @@ async function start() {
             `${unk + 1} / 5 回目 完了　スコア: ${totalScore}`;
         await sleep(100);
     }
-    const max = Math.max(...sukoa);
+    const max = Math.max(...cpusukoa) + Math.max(...memsukoa) + Math.max(...gpusukoa);
     totalelement.innerHTML = `<h1>${max}</h1>`;
     let naiyou = "";
     if (max >= 100000) {
